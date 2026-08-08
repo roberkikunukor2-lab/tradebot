@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>DOLLARSITE | Dashboard</title>
+
+<link rel="stylesheet" href="css/dashboard.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<header class="topbar">
+    <h2>DOLLARSITE</h2>
+
+    <div class="user-info">
+        <span id="username">User</span>
+        <button onclick="logout()">Logout</button>
+    </div>
+</header>
+
+<section class="dashboard">
+
+    <div class="card balance">
+        <h3>Account Balance</h3>
+        <h1 id="balance">$0.00</h1>
+    </div>
+
+    <div class="card actions">
+        <button onclick="deposit()">Deposit</button>
+        <button onclick="withdraw()">Withdraw</button>
+    </div>
+
+    <div class="card trading">
+        <h3>Trading Panel</h3>
+        <p>Market is active. Start trading manually or use AI bot.</p>
+
+        <button onclick="startTrade()">Start Trade</button>
+    </div>
+
+    <div class="card profit">
+        <h3>Profit Today</h3>
+        <h1 id="profit">$0.00</h1>
+    </div>
+
+</section>
+
+<script src="js/dashboard.js"></script>
+
+</body>
+</html>
