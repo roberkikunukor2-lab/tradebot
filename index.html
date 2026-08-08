@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TradeBot Dashboard</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><div class="logo">₿</div><div><b>TradeBot</b><span>Deriv automation</span></div></div>
+      <nav>
+        <button class="nav active" data-page="dashboard">Dashboard</button>
+        <button class="nav" data-page="settings">Bot Settings</button>
+        <button class="nav" data-page="activity">Activity</button>
+      </nav>
+      <div class="side-bottom">
+        <div class="connection"><i id="dot"></i><span id="connectionText">Disconnected</span></div>
+        <small>Use DEMO mode first. Never paste a Deriv token into frontend code.</small>
+      </div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div>
+          <h1 id="pageTitle">Dashboard</h1>
+          <p>Monitor your automated strategy in one place.</p>
+        </div>
+        <div class="account">
+          <span id="modeBadge" class="badge">DEMO</span>
+          <span id="balance">Balance: —</span>
+        </div>
+      </header>
+
+      <section id="dashboard" class="page">
+        <div class="grid stats">
+          <article class="card"><span>Bot status</span><strong id="botStatus">Stopped</strong><small id="botDetail">Ready to start</small></article>
+          <article class="card"><span>Symbol</span><strong id="symbolStat">R_10</strong><small>Volatility 10 (1s)</small></article>
+          <article class="card"><span>Stake</span><strong id="stakeStat">$1.00</strong><small>Per trade</small></article>
+          <article class="card"><span>Session P/L</span><strong id="pnl">$0.00</strong><small id="tradeCount">0 trades</small></article>
+        </div>
+
+        <div class="grid main-grid">
+          <section class="card chart-card">
+            <div class="card-head"><div><h2>Market</h2><span id="marketName">Volatility 10 (1s)</span></div><span class="live"><i></i> LIVE</span></div>
+            <canvas id="chart" height="280"></canvas>
+            <div class="price-row"><span>Latest tick</span><strong id="latestPrice">—</strong></div>
+          </section>
+
+          <section class="card control-card">
+            <div class="card-head"><div><h2>Bot control</h2><span>Start/stop your strategy</span></div></div>
+            <div class="field"><label>Mode</label><select id="mode"><option value="demo">Demo / paper</option><option value="real">Real Deriv account</option></select></div>
+            <div class="field"><label>Direction</label><select id="direction"><option value="RISE">Rise</option><option value="FALL">Fall</option></select></div>
+            <div class="field"><label>Stake</label><input id="stake" type="number" min="0.35" step="0.01" value="1.00"></div>
+            <div class="field"><label>Duration (ticks)</label><input id="duration" type="number" min="1" max="10" value="1"></div>
+            <button id="startBtn" class="primary">Start Bot</button>
+            <button id="stopBtn" class="danger" disabled>Stop Bot</button>
+            <div id="notice" class="notice">Paper mode is enabled by default.</div>
+          </section>
+        </div>
+
+        <section class="card log-card">
+          <div class="card-head"><div><h2>Activity</h2><span>Latest bot events</span></div><button id="clearLog" class="ghost">Clear</button></div>
+          <div id="log" class="log"></div>
+        </section>
+      </section>
+
+      <section id="settings" class="page hidden">
+        <section class="card settings-card">
+          <h2>Bot Settings</h2>
+          <p class="muted">These settings are sent to the backend. Real trading requires a Deriv API token configured on the server.</p>
+          <div class="settings-grid">
+            <div class="field"><label>Strategy</label><select id="strategy"><option>Last digit momentum</option><option>Simple tick direction</option></select></div>
+            <div class="field"><label>Max trades / session</label><input id="maxTrades" type="number" min="1" value="20"></div>
+            <div class="field"><label>Stop loss ($)</label><input id="stopLoss" type="number" min="0" step="0.01" value="10"></div>
+            <div class="field"><label>Take profit ($)</label><input id="takeProfit" type="number" min="0" step="0.01" value="10"></div>
+          </div>
+          <button id="saveSettings" class="primary small">Save settings</button>
+          <div id="settingsSaved" class="notice hidden">Settings saved.</div>
+        </section>
+      </section>
+
+      <section id="activity" class="page hidden">
+        <section class="card">
+          <div class="card-head"><div><h2>Trade history</h2><span>Current browser session</span></div></div>
+          <div class="table-wrap"><table><thead><tr><th>Time</th><th>Mode</th><th>Symbol</th><th>Direction</th><th>Stake</th><th>Result</th></tr></thead><tbody id="history"></tbody></table></div>
+        </section>
+      </section>
+    </main>
+  </div>
+  <script src="./app.js"></script>
+</body>
+</html>
